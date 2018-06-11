@@ -3,8 +3,8 @@ package sysinit
 import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"scaler/common/utils"
-	"scaler/common/constant"
+	"rcKit/common/utils"
+	"rcKit/common/constant"
 	"sync"
 	mylog "github.com/maxwell92/gokits/log"
 	"strings"
