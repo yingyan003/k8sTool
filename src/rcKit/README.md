@@ -1,7 +1,7 @@
-# 背景
-公司机房迁移，k8s集群从1.4.9升级到1.9.7，需要用到一键扩缩容应用。需求是：
+# 简介
+该工具用于在k8s集群中一键扩缩容应用。
 
-1. 写一个二进制工具，直接在机器上使用。
+1. 通过编译成二进制方式，直接在机器上使用。
 2. 可修改指定namespace下某个应用的副本数
 3. 可修改所有namespace下所有应用的副本数
 3. 可连接旧集群（不需要TLS证书认证）和新集群（需要TLS证书认证）
@@ -9,16 +9,16 @@
 
 # 使用方法说明：
 
-将scaler的二进制文件拷贝到目标机器。
+将rcKit的二进制文件拷贝到目标机器。
 配置环境变量：
 APISERVER: k8s的apiserver,形如：ip:端口。 必须配置
 LOGLEVEL: 日志级别，默认是“ERROR”。 可选
-在scaler的二进制文件的同级目录存放以下3个证书文件
+在rcKit的二进制文件的同级目录存放以下3个证书文件
 · ca.crt：对应k8s证书ca.crt（证书名可能不同）
 · client.crt:  对应k8s证书apiserver-kubelet-client.crt
 · client.key:  对应k8s证书apiserver-kubelet-client.key
 使用方式：
-1）脚本运行参数查看方式： ./scaler  -h
+1）脚本运行参数查看方式： ./rcKit  -h
 2）参数详解：
 -auth int
 是否访问需要tls认证的集群，非必填，0表示不认证，1表示认证，默认值为0
@@ -57,9 +57,9 @@ key对应证书的全路径名，非必填，无默认值。不提供则从当�
 
 source env.sh
 
-TLS集群：./scaler -auth=1 -ns=1 -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
+TLS集群：./rcKit -auth=1 -ns=1 -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
 
-非TLS集群：./scaler  -ns=1
+非TLS集群：./rcKit  -ns=1
 
 
 
@@ -67,9 +67,9 @@ TLS集群：./scaler -auth=1 -ns=1 -caPath=/etc/kubernetes/pki/ca.crt -certPath=
 
 source env.sh
 
-TLS集群：./scaler -auth=1 -orgName XXX -dpName XXX -replicas XXX -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
+TLS集群：./rcKit -auth=1 -orgName XXX -dpName XXX -replicas XXX -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
 
-非TLS集群：./scaler  -orgName XXX -dpName XXX -replicas XXX
+非TLS集群：./rcKit  -orgName XXX -dpName XXX -replicas XXX
 
 
 
@@ -77,9 +77,9 @@ TLS集群：./scaler -auth=1 -orgName XXX -dpName XXX -replicas XXX -caPath=/etc
 
 source env.sh
 
-TLS集群：./scaler -auth=1 -orgName XXX -replicas XXX  -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
+TLS集群：./rcKit -auth=1 -orgName XXX -replicas XXX  -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
 
-非TLS集群：./scaler  -orgName XXX -replicas XXX
+非TLS集群：./rcKit  -orgName XXX -replicas XXX
 
 
 
@@ -87,9 +87,9 @@ TLS集群：./scaler -auth=1 -orgName XXX -replicas XXX  -caPath=/etc/kubernetes
 
 source env.sh
 
-TLS集群：./scaler -auth=1 -orgName all -replicas XXX -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
+TLS集群：./rcKit -auth=1 -orgName all -replicas XXX -caPath=/etc/kubernetes/pki/ca.crt -certPath=/etc/kubernetes/pki/apiserver-kubelet-client.crt -keyPath=/etc/kubernetes/pki/apiserver-kubelet-client.key
 
-非TLS集群：./scaler -orgName all -replicas XXX
+非TLS集群：./rcKit -orgName all -replicas XXX
 
 
 
